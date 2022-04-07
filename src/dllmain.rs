@@ -76,7 +76,7 @@ mod min_crt_init {
 
     #[no_mangle]
     extern "C" fn memmove(dst: *mut u8, src: *const u8, n: usize) -> *mut u8 {
-        if unsafe { src.add(n) } <= dst {
+        if src >= dst || unsafe { src.add(n) } <= dst {
             for i in 0..n {
                 unsafe { *dst.add(i) = *src.add(i) };
             }
