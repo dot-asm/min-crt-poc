@@ -33,6 +33,7 @@ mod min_crt_init {
     #[link_section = ".tls$ZZZ"]
     static _tls_end: u64 = 0;
 
+    #[no_mangle]
     static mut _tls_index: u32 = 0;
 
     #[used]
