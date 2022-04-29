@@ -1,11 +1,9 @@
 include!("dllmain.rs");
 
 mod selftest {
-    use crate::min_crt_init::CrtInit;
-
     #[used]
     #[link_section = ".CRT$XCU"]
-    static INIT_REG: CrtInit = Some(init);
+    static INIT_REG: unsafe extern "C" fn() = init;
 
     static mut MAGIC: u32 = 0;
     unsafe extern "C" fn init() {

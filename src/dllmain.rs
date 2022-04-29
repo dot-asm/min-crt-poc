@@ -33,9 +33,11 @@ mod min_crt_init {
     #[link_section = ".tls$ZZZ"]
     static _tls_end: u64 = 0;
 
+    #[cfg(not(target_env = "msvc"))]
     #[no_mangle]
     static mut _tls_index: u32 = 0;
 
+    #[cfg(not(target_env = "msvc"))]
     #[used]
     #[no_mangle]
     static _tls_used: IMAGE_TLS_DIRECTORY = IMAGE_TLS_DIRECTORY {
@@ -53,9 +55,11 @@ mod min_crt_init {
     static __xc_z: CrtInit = None;
 
     #[no_mangle]
-    unsafe extern "system" fn DllMain(_: *const c_void, reason: u32, _: *const c_void) -> bool {
+    unsafe extern "system" fn DllMain(h: *const c_void, reason: u32, _: *const c_void) -> i32 {
         const DLL_PROCESS_ATTACH: u32 = 1;
+        extern "system" { fn DisableThreadLibraryCalls(h: *const c_void); }
         if reason == DLL_PROCESS_ATTACH {
+            DisableThreadLibraryCalls(h);
             let mut ptr = &__xc_a as *const CrtInit;
             while ptr < &__xc_z {
                 if let Some(f) = *ptr {
@@ -64,7 +68,7 @@ mod min_crt_init {
                 ptr = ptr.add(1);
             }
         }
-        return true;
+        1
     }
 
     #[no_mangle]
