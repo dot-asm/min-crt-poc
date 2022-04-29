@@ -5,7 +5,7 @@ fn main() {
     }
     if std::env::var("CARGO_CFG_TARGET_ENV").unwrap().eq("msvc") {
         println!("cargo:rustc-cdylib-link-arg=ucrt.lib");
-        println!("cargo:rustc-cdylib-link-arg=vcruntime.lib");
+        println!("cargo:rustc-cdylib-link-arg=libvcruntime.lib");
         println!("cargo:rustc-cdylib-link-arg=/ENTRY:DllMain");
         println!("cargo:rustc-link-arg-bins=poc.dll.lib");
     } else {
