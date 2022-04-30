@@ -7,6 +7,7 @@ fn main() {
         println!("cargo:rustc-cdylib-link-arg=ucrt.lib");
         println!("cargo:rustc-cdylib-link-arg=libvcruntime.lib");
         println!("cargo:rustc-cdylib-link-arg=/ENTRY:DllMain");
+        println!("cargo:rustc-cdylib-link-arg=/MERGE:.tls=.rdata");
         println!("cargo:rustc-link-arg-bins=poc.dll.lib");
     } else {
         println!("cargo:rustc-cdylib-link-arg=-nostdlib");

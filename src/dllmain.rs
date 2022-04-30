@@ -33,11 +33,9 @@ mod min_crt_init {
     #[link_section = ".tls$ZZZ"]
     static _tls_end: u64 = 0;
 
-    #[cfg(not(target_env = "msvc"))]
     #[no_mangle]
     static mut _tls_index: u32 = 0;
 
-    #[cfg(not(target_env = "msvc"))]
     #[used]
     #[no_mangle]
     static _tls_used: IMAGE_TLS_DIRECTORY = IMAGE_TLS_DIRECTORY {
