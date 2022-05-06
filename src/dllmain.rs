@@ -5,8 +5,8 @@ mod min_crt_init {
     use core::ffi::c_void;
     use core::option::Option;
 
-    pub(crate) type CallBack = Option<unsafe extern "system" fn(*const c_void, u32, *const c_void)>;
-    pub(crate) type CrtInit = Option<unsafe extern "C" fn()>;
+    type CallBack = Option<unsafe extern "system" fn(*const c_void, u32, *const c_void)>;
+    type CrtInit = Option<unsafe extern "C" fn()>;
 
     #[repr(C)]
     struct IMAGE_TLS_DIRECTORY {
@@ -36,7 +36,6 @@ mod min_crt_init {
     #[no_mangle]
     static mut _tls_index: u32 = 0;
 
-    #[used]
     #[no_mangle]
     static _tls_used: IMAGE_TLS_DIRECTORY = IMAGE_TLS_DIRECTORY {
         StartAddressOfRawData: unsafe { core::mem::transmute(&_tls_start) },
