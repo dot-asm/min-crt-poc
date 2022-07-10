@@ -1,6 +1,5 @@
 fn main() {
-    if std::env::var("CARGO_CFG_WINDOWS").is_err()
-    {
+    if std::env::var("CARGO_CFG_WINDOWS").is_err() {
         panic!("this is a Windows-only crate");
     }
     if std::env::var("CARGO_CFG_TARGET_ENV").unwrap().eq("msvc") {
