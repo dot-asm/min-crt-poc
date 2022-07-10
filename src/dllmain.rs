@@ -78,13 +78,17 @@ mod min_crt_init {
 
     #[no_mangle]
     extern "C" fn memmove(dst: *mut u8, src: *const u8, n: usize) -> *mut u8 {
-        if src >= dst || unsafe { src.add(n) } <= dst {
+        if src >= unsafe { dst.add(n) } || unsafe { src.add(n) } <= dst {
             for i in 0..n {
                 unsafe { *dst.add(i) = *src.add(i) };
             }
-        } else {
+        } else if src > dst {
+            for i in 0..n {
+                unsafe { dst.add(i).write_volatile(src.add(i).read_volatile()) };
+            }
+        } else if src != dst {
             for i in 1..n + 1 {
-                unsafe { *dst.add(n - i) = *src.add(n - i) };
+                unsafe { dst.add(n - i).write_volatile(src.add(n - i).read_volatile()) };
             }
         }
         dst
