@@ -21,7 +21,7 @@ mod min_crt_init {
 
     unsafe extern "system" fn nop(_: *const c_void, _: u32, _: *const c_void) {}
 
-    #[used]
+    #[no_mangle]
     #[link_section = ".CRT$XLA"]
     static __xl_a: CallBack = Some(nop);
     #[used]
