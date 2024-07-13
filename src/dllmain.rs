@@ -10,8 +10,8 @@ mod min_crt_init {
 
     #[repr(C)]
     struct IMAGE_TLS_DIRECTORY {
-        StartAddressOfRawData: *const c_void,
-        EndAddressOfRawData: *const c_void,
+        StartAddressOfRawData: *const u64,
+        EndAddressOfRawData: *const u64,
         AddressOfIndex: *const u32,
         AddressOfCallBacks: *const CallBack,
         SizeOfZeroFill: u32,
@@ -38,9 +38,9 @@ mod min_crt_init {
 
     #[no_mangle]
     static _tls_used: IMAGE_TLS_DIRECTORY = IMAGE_TLS_DIRECTORY {
-        StartAddressOfRawData: unsafe { core::mem::transmute(&_tls_start) },
-        EndAddressOfRawData: unsafe { core::mem::transmute(&_tls_end) },
-        AddressOfIndex: unsafe { &_tls_index },
+        StartAddressOfRawData: &_tls_start,
+        EndAddressOfRawData: &_tls_end,
+        AddressOfIndex: unsafe { core::ptr::addr_of!(_tls_index) },
         AddressOfCallBacks: &__xl_a,
         SizeOfZeroFill: 0,
         Characteristics: 0,
