@@ -13,4 +13,11 @@ fn main() {
         println!("cargo:rustc-cdylib-link-arg=-Wl,--entry=DllMain");
         println!("cargo:rustc-link-arg-bins=-lpoc");
     }
+    if let Ok(out_dir) = std::env::var("OUT_DIR") {
+        let mut build_dir = std::path::PathBuf::from(out_dir);
+        build_dir.pop();
+        build_dir.pop();
+        build_dir.pop();
+        println!("cargo:rustc-link-search=native={}", build_dir.display());
+    }
 }

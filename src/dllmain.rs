@@ -40,7 +40,7 @@ mod min_crt_init {
     static _tls_used: IMAGE_TLS_DIRECTORY = IMAGE_TLS_DIRECTORY {
         StartAddressOfRawData: &_tls_start,
         EndAddressOfRawData: &_tls_end,
-        AddressOfIndex: unsafe { core::ptr::addr_of!(_tls_index) },
+        AddressOfIndex: &raw const _tls_index,
         AddressOfCallBacks: &__xl_a,
         SizeOfZeroFill: 0,
         Characteristics: 0,
